@@ -1,49 +1,36 @@
 import React, { Component } from 'react'
+import BookDisplay from './BookDisplay'
 import {Link} from 'react-router-dom'
 import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
 import * as BooksAPI from './BooksAPI'
 
+
 class Search extends Component {
   state = {
     query: '',
-    books: [],
-    searchErr: false
+    books: []
   }
 
   updateQuery = (query) => {
-    this.setState({ query: query.trim() })
-  }
-
-  clearQuery = () => {
-    this.setState({ query: '' })
+    this.setState({
+      query: query
+    })
+    if (query) {
+      BooksAPI.search(query, 20).then((response) => {
+        response.length > 0 ? this.setState({books: response})
+        : this.setState({ books: []})
+      })
+    } else {
+      this.setState({books: []})
+    }
   }
 
   render() {
-    const{ query, books } = this.state
-
-    if (query) {
-      BooksAPI.search(query, 20).then((results) => {
-        results.length > 0 ? this.setState({books: results, searchErr: false })
-        : this.setState({ books: [], searchErr: true })
-      })
-    }
-
-    // let showingBooks
-    // if (query) {
-    //   const match = new RegExp(escapeRegExp(query), 'i')
-    //   showingBooks = books.filter((book) => match.test(book.name))
-    // }
-
-
+    const{ query, books, searchError } = this.state
 
 
     return (
-
-      // let showingBooks
-      // if (query) {
-      //
-      // }
       <div className="search-books">
         <div className="search-books-bar">
           <Link
@@ -66,26 +53,25 @@ class Search extends Component {
               placeholder="Search by title or author"
               onChange={(event) => this.updateQuery(event.target.value)}
             />
-
           </div>
         </div>
         <div className="search-books-results">
           {books.length > 0 && (
             <div>
-              <div>
-                <h3>Search returned { books.length } books </h3>
-              </div>
-              <ol className="books-grid">
-                {books.map((book) => (
-                  <li>
-                    <p>{book.title}</p>
-                  </li>
-                ))}
-              </ol>
+              <h3>Your search returned { books.length } books.</h3>
             </div>
-
           )}
-
+            <div>
+            <ol className="books-grid">
+              {books.map((book) => (
+                <li key={book.id}>
+                  <BookDisplay
+                    book={ book }>
+                  </BookDisplay>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </div>
     )

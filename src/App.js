@@ -11,16 +11,29 @@ import WantToRead from "./WantToRead"
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
-    currentlyReading: [],
-    wantToRead: [],
-    read: []
+    books: []
   }
   componentDidMount() {
-    BooksAPI.getAll().then((wantToRead) => {
-      this.setState({ wantToRead })
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books })
     })
   }
+  changeList = (book, newShelf) => {
+    BooksAPI.update(book, newShelf).then(() => {
+      book.shelf = newShelf
+      this.setState(state => ({
+        books: state.books.filter((b) => b.id !== book.id).concat([book])
+      }));
+    });
+   };
+
+  removeList = (book) => {
+    this.setState((state) => ({
+      [book.shelf]: state[book.shelf].filter((b) => b.id !== book.id)
+
+    }))
+  }
+
 
   render() {
     return (
@@ -31,14 +44,13 @@ class BooksApp extends React.Component {
             <h1>MyReads</h1>
           </div>
           <div className="list-books-content">
-              <div>
-                <WantToRead
-                books={this.state.wantToRead}/>
+
                 <CurrentlyReading
-                books={this.state.currentlyReading}/>
-                <Read
-                books={this.state.read}/>
-              </div>
+                books={this.state.books}
+                read={this.state.read}
+                changeList={this.changeList}
+                removeList={this.removeList}/>
+
           </div>
           <div className="open-search">
             <Link
@@ -49,7 +61,7 @@ class BooksApp extends React.Component {
         </div>
           )}/>
         <Route path="/search" render={() => (
-          <Search />
+          <Search/>
         )}/>
     </div>
 

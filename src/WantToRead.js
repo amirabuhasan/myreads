@@ -12,7 +12,10 @@ class WantToRead extends Component {
           <ol className="books-grid">
             {books.map((book) => (
               <li key={book.id}>
-                <BookDisplay book={ book }/>
+                <BookDisplay
+                book={ book }
+                changeList={this.props.changeList}
+              removeList={this.props.removeList}/>
               </li>
             ))}
           </ol>

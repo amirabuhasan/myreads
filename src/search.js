@@ -13,22 +13,31 @@ class Search extends Component {
   }
 
   updateQuery = (query) => {
+    var self = this
     this.setState({
       query: query
     })
     if (query) {
       BooksAPI.search(query, 20).then((response) => {
-        response.length > 0 ? this.setState({books: response})
-        : this.setState({ books: []})
+        if (response.length > 0) {
+          var filteredBooks = response.filter((book) => !self.props.booksOnShelf.some((book2) =>
+              book.id === book2.id
+            )
+          )
+          this.setState({ books: filteredBooks })
+        } else {
+          this.setState({ books: []})
+        }
       })
+      console.log(this.state.books)
     } else {
-      this.setState({books: []})
+      this.setState({ books: [] })
     }
   }
 
   render() {
     const{ query, books, searchError } = this.state
-
+    let showingBooks
 
     return (
       <div className="search-books">
@@ -51,7 +60,7 @@ class Search extends Component {
               type="text"
               value={query}
               placeholder="Search by title or author"
-              onChange={(event) => this.updateQuery(event.target.value)}
+              onChange={(e) => this.updateQuery(e.target.value)}
             />
           </div>
         </div>
@@ -63,10 +72,11 @@ class Search extends Component {
           )}
             <div>
             <ol className="books-grid">
-              {books.map((book) => (
+              {books.map((book) => book.shelf = "none" && (
                 <li key={book.id}>
                   <BookDisplay
-                    book={ book }>
+                    book={ book }
+                    changeList={this.props.changeList}>
                   </BookDisplay>
                 </li>
               ))}

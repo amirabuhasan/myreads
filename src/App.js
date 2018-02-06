@@ -5,7 +5,7 @@ import './App.css'
 import { Route } from "react-router-dom"
 import Search from "./search"
 import BookList from "./BookList"
-import CurrentlyReading from "./CurrentlyReading"
+import Bookshelf from "./Bookshelf"
 import Read from "./Read"
 import WantToRead from "./WantToRead"
 
@@ -27,13 +27,6 @@ class BooksApp extends React.Component {
     });
    };
 
-  removeList = (book) => {
-    this.setState((state) => ({
-      [book.shelf]: state[book.shelf].filter((b) => b.id !== book.id)
-
-    }))
-  }
-
 
   render() {
     return (
@@ -44,13 +37,11 @@ class BooksApp extends React.Component {
             <h1>MyReads</h1>
           </div>
           <div className="list-books-content">
-
-                <CurrentlyReading
+                <Bookshelf
                 books={this.state.books}
                 read={this.state.read}
                 changeList={this.changeList}
                 removeList={this.removeList}/>
-
           </div>
           <div className="open-search">
             <Link
@@ -61,7 +52,9 @@ class BooksApp extends React.Component {
         </div>
           )}/>
         <Route path="/search" render={() => (
-          <Search/>
+          <Search
+          booksOnShelf={this.state.books}
+          changeList={this.changeList}/>
         )}/>
     </div>
 

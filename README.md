@@ -20,4 +20,4 @@ The app also includes a search function that allows users to search for books th
 
 1. [Removing array duplicates with .filter and .some](https://stackoverflow.com/questions/32965688/comparing-two-arrays-of-objects-and-exclude-the-elements-who-match-values-into/32966051)
 2. [Udacity Project Rubric](https://review.udacity.com/#!/rubrics/918/view)
-3. [Udacity React Course]("https://www.udacity.com")
+3. [Udacity React Course](https://www.udacity.com)

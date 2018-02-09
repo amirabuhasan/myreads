@@ -11,7 +11,7 @@ class BooksApp extends React.Component {
   state = {
     books: []
   }
-  
+
   // Gets books from server and adds it to state
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
@@ -38,11 +38,11 @@ class BooksApp extends React.Component {
             <h1>MyReads</h1>
           </div>
           <div className="list-books-content">
-                <Bookshelf
-                books={this.state.books}
-                read={this.state.read}
-                changeList={this.changeList}
-                />
+            <Bookshelf
+            books={this.state.books}
+            read={this.state.read}
+            changeList={this.changeList}
+            />
           </div>
           <div className="open-search">
             <Link

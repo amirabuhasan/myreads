@@ -14,7 +14,7 @@ The app also includes a search function that allows users to search for books th
   1. Clone the project repo
   2. Install all project dependencies with npm install.
   3. Launch the app with npm start.
-* Alternatively, a working live link can also be found here: https://amirabuhasan.github.io/myreads
+  4. The app can be accessed at localhost:3000
 
 ## Resources used
 

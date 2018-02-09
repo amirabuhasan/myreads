@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import BookDisplay from "./BookDisplay"
 
 class Bookshelf extends Component {
   render() {
-    const {books} = this.props
-    const {read} = this.props
+    const { books } = this.props
     const bookshelves = [
       {name: "currentlyReading",
       title: "Currently Reading"},
@@ -17,17 +16,17 @@ class Bookshelf extends Component {
 
     return (
       <div>
-        {bookshelves.map((bookshelf) => (
-          <div key={bookshelf.name} className="bookshelf">
-            <h2 className="bookshelf-title">{bookshelf.title}</h2>
+        { bookshelves.map((bookshelf) => (
+          <div key={ bookshelf.name } className="bookshelf">
+            <h2 className="bookshelf-title">{ bookshelf.title }</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
-                {books.map((book) => book.shelf == bookshelf.name && (
-                  <li key={book.id}>
+                { books.map((book) => book.shelf == bookshelf.name && (
+                  <li key={ book.id }>
                     <BookDisplay
                       book={ book }
                       books={ books }
-                      changeList={this.props.changeList}
+                      changeList={ this.props.changeList }
                     />
                   </li>
                 ))}

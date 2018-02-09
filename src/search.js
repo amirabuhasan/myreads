@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import BookDisplay from './BookDisplay'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 
 
@@ -10,7 +10,7 @@ class Search extends Component {
     books: []
   }
 
-  // updates the query on state
+  // updates the query string on the component state
   updateQuery = (query) => {
     var self = this
     this.setState({
@@ -29,7 +29,7 @@ class Search extends Component {
             )})
           this.setState({ books: filteredBooks })
         } else {
-          this.setState({ books: []})
+          this.setState({ books: [] })
         }
       })
     } else {
@@ -54,7 +54,8 @@ class Search extends Component {
               type="text"
               value={query}
               placeholder="Search by title or author"
-              onChange={(e) => this.updateQuery(e.target.value)}
+              // calls .updateQuery to update the query state to the user's input value
+              onChange={ (e) => this.updateQuery(e.target.value) }
             />
           </div>
         </div>
@@ -67,10 +68,10 @@ class Search extends Component {
             <div>
             <ol className="books-grid">
               {books.map((book) => book.shelf == "none" && (
-                <li key={book.id}>
+                <li key={ book.id }>
                   <BookDisplay
                     book={ book }
-                    changeList={this.props.changeList}>
+                    changeList={ this.props.changeList }>
                   </BookDisplay>
                 </li>
               ))}

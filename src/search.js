@@ -12,12 +12,16 @@ class Search extends Component {
     books: []
   }
 
+  // updates the query on state
   updateQuery = (query) => {
     var self = this
     this.setState({
       query: query
     })
     if (query) {
+      // calls the .search method and checks to see if the query returns a response.
+      // if it receives a response, sets .shelf of the responses to "none" by default, and filters out responses that match existing books on the shelf and updates the state
+      // else, updates the books state to be an empty array
       BooksAPI.search(query, 20).then((response) => {
         if (response.length > 0) {
           var filteredBooks = response.filter((book) => {
@@ -36,7 +40,7 @@ class Search extends Component {
   }
 
   render() {
-    const{ query, books, searchError } = this.state
+    const{ query, books } = this.state
     let showingBooks
 
     return (

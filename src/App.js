@@ -4,29 +4,30 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import { Route } from "react-router-dom"
 import Search from "./search"
-import BookList from "./BookList"
 import Bookshelf from "./Bookshelf"
-import Read from "./Read"
-import WantToRead from "./WantToRead"
+
 
 class BooksApp extends React.Component {
   state = {
     books: []
   }
+  
+  // Gets books from server and adds it to state
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
     })
   }
+
+  // Takes the book object and shelf name, and calls .update method to change the shelf of a book. Updates the app state after.
   changeList = (book, newShelf) => {
     BooksAPI.update(book, newShelf).then(() => {
       book.shelf = newShelf
       this.setState(state => ({
         books: state.books.filter((b) => b.id !== book.id).concat([book])
-      }));
-    });
-   };
-
+      }))
+    })
+   }
 
   render() {
     return (
@@ -41,7 +42,7 @@ class BooksApp extends React.Component {
                 books={this.state.books}
                 read={this.state.read}
                 changeList={this.changeList}
-                removeList={this.removeList}/>
+                />
           </div>
           <div className="open-search">
             <Link
@@ -57,7 +58,6 @@ class BooksApp extends React.Component {
           changeList={this.changeList}/>
         )}/>
     </div>
-
     )
   }
 }

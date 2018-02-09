@@ -10,9 +10,7 @@ class BookDisplay extends Component {
           <div className="book-shelf-changer">
             <select
               value={book.shelf}
-              onChange={(e) => {
-              this.props.changeList(book, e.target.value)
-              }}>
+              onChange={(e) => {this.props.changeList(book, e.target.value)}}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
@@ -25,7 +23,6 @@ class BookDisplay extends Component {
         <div className="book-authors">{book.authors}</div>
       </div>
     )
-// add book here. book is inherited from pages. this.value, and then use book to identify which list book is currently in. changelist(book, value)
   }
 }
 
